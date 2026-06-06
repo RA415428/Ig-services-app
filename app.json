@@ -7,11 +7,6 @@
     "userInterfaceStyle": "light",
     "android": {
       "package": "com.nayakhardayal4.igservices"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "87b2e408-395c-4aec-9ba9-8095472ea3ff"
-      }
     }
   }
 }
