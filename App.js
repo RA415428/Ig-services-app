@@ -1,54 +1,51 @@
 import React, { useState, useEffect } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  ScrollView,
-  Alert,
-  ActivityIndicator
+import { 
+  StyleSheet, 
+  Text, 
+  View, 
+  TextInput, 
+  TouchableOpacity, 
+  ScrollView, 
+  Alert, 
+  ActivityIndicator 
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { Ionicons } from '@expo/vector-icons';
 
 const API_URL = 'https://ig-services-rdeu.onrender.com/api';
 
 export default function App() {
   const [showSplash, setShowSplash] = useState(true);
-  const [screen, setScreen] = useState('Login'); // Login, Register, Home, Earn, DailyBonus, Settings, MyOrders, Order, AddAccount
+  const [screen, setScreen] = useState('Login'); // Login, Register, Home, Earn, DailyBonus, Settings, MyOrders, Order
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [userId, setUserId] = useState(null);
   const [coins, setCoins] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  // Form States
+  // Forms States
   const [instaUser, setInstaUser] = useState('');
   const [instaPass, setInstaPass] = useState('');
   const [targetUrl, setTargetUrl] = useState('');
-  const [orderType, setOrderType] = useState('like');
+  const [orderType, setOrderType] = useState('like'); 
   const [quantity, setQuantity] = useState('');
   const [orderList, setOrderList] = useState([]);
   const [dailyBonusClaimed, setDailyBonusClaimed] = useState(false);
 
   const coinCostPerItem = { like: 2, follower: 5, comment: 3, view: 1 };
 
-  // Navigation Color Helpers
+  // Navigation Helpers
   const activeColor = '#E1306C';
-  const inactiveColor = '#9CA3AF';
+  const inactiveColor = '#94A3B8';
   const isHome = screen === 'Home';
   const isEarn = screen === 'Earn';
   const isBonus = screen === 'DailyBonus';
-
-  // BUG FIX #2: AddAccount screen bhi Settings tab mein highlight hona chahiye
-  const isSettings = screen === 'Settings' || screen === 'MyOrders' || screen === 'AddAccount';
+  const isSettings = screen === 'Settings' || screen === 'MyOrders';
 
   // Splash Timer
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowSplash(false);
-    }, 2500);
+    }, 2500); 
     return () => clearTimeout(timer);
   }, []);
 
@@ -139,7 +136,7 @@ export default function App() {
       const res = await fetch(`${API_URL}/add-coins`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId, coinAmount: 10 })
+        body: JSON.stringify({ userId, coinAmount: 10 }) 
       });
       const data = await res.json();
       if (res.ok) {
@@ -184,9 +181,8 @@ export default function App() {
 
   // Create Order
   const handleCreateOrder = async () => {
-    // BUG FIX #6: Improved quantity validation
     const qtyNum = parseInt(quantity);
-    if (!targetUrl || !quantity || isNaN(qtyNum) || qtyNum <= 0) {
+    if (!targetUrl || isNaN(qtyNum) || qtyNum <= 0) {
       Alert.alert('Error', 'Please enter valid URL and Quantity');
       return;
     }
@@ -237,28 +233,14 @@ export default function App() {
     setLoading(false);
   };
 
-  // BUG FIX #3: Logout mein poori state reset
-  const handleLogout = () => {
-    setUserId(null);
-    setCoins(0);
-    setEmail('');
-    setPassword('');
-    setOrderList([]);
-    setDailyBonusClaimed(false);
-    setInstaUser('');
-    setInstaPass('');
-    setTargetUrl('');
-    setQuantity('');
-    setOrderType('like');
-    setScreen('Login');
-  };
-
-  // Splash Screen
+  // Splash Screen Layout
   if (showSplash) {
     return (
       <View style={styles.splashContainer}>
         <StatusBar style="light" />
-        <Ionicons name="logo-instagram" size={80} color="#FFFFFF" style={{ marginBottom: 20 }} />
+        <View style={styles.splashLogoCircle}>
+          <Text style={{ fontSize: 40 }}>📸</Text>
+        </View>
         <Text style={styles.splashText}>IG SERVICES</Text>
         <Text style={styles.splashSub}>Premium Instagram Booster</Text>
       </View>
@@ -268,7 +250,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
-
+      
       {loading && (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#E1306C" />
@@ -284,25 +266,26 @@ export default function App() {
       )}
 
       <ScrollView contentContainerStyle={styles.mainScroll}>
-
         {/* 1. Login Screen */}
         {screen === 'Login' && (
           <View style={styles.authContainer}>
-            <Ionicons name="logo-instagram" size={70} color="#E1306C" style={{ marginBottom: 15 }} />
+            <View style={[styles.iconCircle, { width: 80, height: 80, borderRadius: 40, marginBottom: 20 }]}>
+              <Text style={{ fontSize: 40 }}>📸</Text>
+            </View>
             <Text style={styles.authTitle}>Instagram Services</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Username / Email"
+            <TextInput 
+              style={styles.input} 
+              placeholder="Username / Email" 
               placeholderTextColor="#9CA3AF"
-              value={email}
+              value={email} 
               onChangeText={setEmail}
               autoCapitalize="none"
             />
-            <TextInput
-              style={styles.input}
-              placeholder="Password"
+            <TextInput 
+              style={styles.input} 
+              placeholder="Password" 
               placeholderTextColor="#9CA3AF"
-              value={password}
+              value={password} 
               onChangeText={setPassword}
               secureTextEntry
             />
@@ -318,21 +301,23 @@ export default function App() {
         {/* 2. Register Screen */}
         {screen === 'Register' && (
           <View style={styles.authContainer}>
-            <Ionicons name="logo-instagram" size={70} color="#E1306C" style={{ marginBottom: 15 }} />
+            <View style={[styles.iconCircle, { width: 80, height: 80, borderRadius: 40, marginBottom: 20 }]}>
+              <Text style={{ fontSize: 40 }}>📸</Text>
+            </View>
             <Text style={styles.authTitle}>Create Account</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Email"
+            <TextInput 
+              style={styles.input} 
+              placeholder="Email" 
               placeholderTextColor="#9CA3AF"
-              value={email}
+              value={email} 
               onChangeText={setEmail}
               autoCapitalize="none"
             />
-            <TextInput
-              style={styles.input}
-              placeholder="Password"
+            <TextInput 
+              style={styles.input} 
+              placeholder="Password" 
               placeholderTextColor="#9CA3AF"
-              value={password}
+              value={password} 
               onChangeText={setPassword}
               secureTextEntry
             />
@@ -350,7 +335,9 @@ export default function App() {
           <View style={styles.innerContainer}>
             <TouchableOpacity style={styles.serviceCard} onPress={() => setScreen('Order')}>
               <View style={styles.serviceCardHeader}>
-                <Ionicons name="rocket-sharp" size={24} color="#E1306C" style={{ marginRight: 10 }} />
+                <View style={styles.iconCircle}>
+                  <Text style={styles.iconText}>🚀</Text>
+                </View>
                 <Text style={styles.serviceCardTitle}>Place Boost Order</Text>
               </View>
               <Text style={styles.serviceCardSub}>Get Real Likes, Followers, Comments & Views</Text>
@@ -358,7 +345,9 @@ export default function App() {
 
             <TouchableOpacity style={styles.serviceCard} onPress={() => setScreen('AddAccount')}>
               <View style={styles.serviceCardHeader}>
-                <Ionicons name="key-sharp" size={24} color="#E1306C" style={{ marginRight: 10 }} />
+                <View style={styles.iconCircle}>
+                  <Text style={styles.iconText}>🔑</Text>
+                </View>
                 <Text style={styles.serviceCardTitle}>Link Fake Instagram ID</Text>
               </View>
               <Text style={styles.serviceCardSub}>Link accounts to automatically complete exchange orders</Text>
@@ -373,7 +362,9 @@ export default function App() {
             <Text style={styles.pageSubtitle}>Watch visual video ads to claim free coin rewards.</Text>
             <TouchableOpacity style={styles.btnPrimary} onPress={handleWatchAd}>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Ionicons name="play-circle-outline" size={22} color="#FFFFFF" style={{ marginRight: 8 }} />
+                <View style={[styles.iconCircle, { width: 30, height: 30, borderRadius: 15, marginRight: 8, borderColor: '#FFFFFF' }]}>
+                  <Text style={{ fontSize: 14 }}>📺</Text>
+                </View>
                 <Text style={styles.btnText}>Watch Video Ad</Text>
               </View>
             </TouchableOpacity>
@@ -385,12 +376,14 @@ export default function App() {
           <View style={styles.innerContainer}>
             <Text style={styles.pageTitle}>Daily Bonus</Text>
             <Text style={styles.pageSubtitle}>Claim your daily reward of 10 coins once every 24 hours.</Text>
-            <TouchableOpacity
-              style={[styles.btnPrimary, dailyBonusClaimed && { backgroundColor: '#4B5563' }]}
+            <TouchableOpacity 
+              style={[styles.btnPrimary, dailyBonusClaimed && { backgroundColor: '#4B5563' }]} 
               onPress={handleDailyBonus}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Ionicons name="gift" size={22} color="#FFFFFF" style={{ marginRight: 8 }} />
+                <View style={[styles.iconCircle, { width: 30, height: 30, borderRadius: 15, marginRight: 8, borderColor: '#FFFFFF' }]}>
+                  <Text style={{ fontSize: 14 }}>🎁</Text>
+                </View>
                 <Text style={styles.btnText}>{dailyBonusClaimed ? 'Claimed Today' : 'Claim 10 Coins'}</Text>
               </View>
             </TouchableOpacity>
@@ -401,25 +394,30 @@ export default function App() {
         {screen === 'Settings' && (
           <View style={styles.innerContainer}>
             <Text style={styles.pageTitle}>Settings</Text>
-
+            
             <TouchableOpacity style={styles.settingItem} onPress={fetchMyOrders}>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Ionicons name="list-circle-sharp" size={22} color="#E1306C" style={{ marginRight: 10 }} />
+                <View style={styles.iconCircle}>
+                  <Text style={styles.iconText}>📊</Text>
+                </View>
                 <Text style={styles.settingItemText}>My Orders History</Text>
               </View>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.settingItem} onPress={() => Alert.alert('Stats', `Total Orders: ${orderList.length}`)}>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Ionicons name="stats-chart-sharp" size={20} color="#E1306C" style={{ marginRight: 10 }} />
+                <View style={styles.iconCircle}>
+                  <Text style={styles.iconText}>📈</Text>
+                </View>
                 <Text style={styles.settingItemText}>Check Total Orders Count</Text>
               </View>
             </TouchableOpacity>
 
-            {/* BUG FIX #3: handleLogout function use kiya */}
-            <TouchableOpacity style={styles.btnDanger} onPress={handleLogout}>
+            <TouchableOpacity style={styles.btnDanger} onPress={() => {setUserId(null); setScreen('Login');}}>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Ionicons name="log-out-outline" size={20} color="#FFFFFF" style={{ marginRight: 8 }} />
+                <View style={[styles.iconCircle, { width: 30, height: 30, borderRadius: 15, marginRight: 8, borderColor: '#FFFFFF' }]}>
+                  <Text style={{ fontSize: 14 }}>🚪</Text>
+                </View>
                 <Text style={styles.btnText}>Logout Account</Text>
               </View>
             </TouchableOpacity>
@@ -432,8 +430,8 @@ export default function App() {
             <Text style={styles.pageTitle}>New Order</Text>
             <View style={styles.selectorRow}>
               {['like', 'follower', 'comment', 'view'].map((item) => (
-                <TouchableOpacity
-                  key={item}
+                <TouchableOpacity 
+                  key={item} 
                   style={[styles.selectorBtn, orderType === item && styles.selectorActive]}
                   onPress={() => setOrderType(item)}
                 >
@@ -444,30 +442,27 @@ export default function App() {
               ))}
             </View>
 
-            <TextInput
-              style={styles.input}
-              placeholder="Instagram Link"
+            <TextInput 
+              style={styles.input} 
+              placeholder="Instagram Link" 
               placeholderTextColor="#9CA3AF"
-              value={targetUrl}
+              value={targetUrl} 
               onChangeText={setTargetUrl}
               autoCapitalize="none"
             />
-            <TextInput
-              style={styles.input}
-              placeholder="Quantity"
+            <TextInput 
+              style={styles.input} 
+              placeholder="Quantity" 
               placeholderTextColor="#9CA3AF"
-              value={quantity}
+              value={quantity} 
               onChangeText={setQuantity}
               keyboardType="numeric"
             />
-
-            {/* BUG FIX #4: NaN cost display fix */}
             {quantity !== '' && (
               <Text style={styles.costText}>
-                Cost: {(parseInt(quantity) || 0) * coinCostPerItem[orderType]} Coins
+                Cost: {parseInt(quantity) * coinCostPerItem[orderType] || 0} Coins
               </Text>
             )}
-
             <TouchableOpacity style={styles.btnPrimary} onPress={handleCreateOrder}>
               <Text style={styles.btnText}>Submit Order</Text>
             </TouchableOpacity>
@@ -481,9 +476,7 @@ export default function App() {
         {screen === 'MyOrders' && (
           <View style={styles.innerContainer}>
             <Text style={styles.pageTitle}>My Orders</Text>
-
-            {/* BUG FIX #5: Nested ScrollView hata ke View use kiya */}
-            <View style={{ width: '100%' }}>
+            <ScrollView style={{ width: '100%', maxHeight: 350 }}>
               {orderList.length === 0 ? (
                 <Text style={styles.noOrders}>No orders placed yet.</Text>
               ) : (
@@ -495,8 +488,7 @@ export default function App() {
                   </View>
                 ))
               )}
-            </View>
-
+            </ScrollView>
             <TouchableOpacity style={styles.btnSecondary} onPress={() => setScreen('Settings')}>
               <Text style={styles.btnTextSecondary}>Back to Settings</Text>
             </TouchableOpacity>
@@ -507,19 +499,19 @@ export default function App() {
         {screen === 'AddAccount' && (
           <View style={styles.innerContainer}>
             <Text style={styles.pageTitle}>Link Fake ID</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Fake Username"
+            <TextInput 
+              style={styles.input} 
+              placeholder="Fake Username" 
               placeholderTextColor="#9CA3AF"
-              value={instaUser}
+              value={instaUser} 
               onChangeText={setInstaUser}
               autoCapitalize="none"
             />
-            <TextInput
-              style={styles.input}
-              placeholder="Fake Password"
+            <TextInput 
+              style={styles.input} 
+              placeholder="Fake Password" 
               placeholderTextColor="#9CA3AF"
-              value={instaPass}
+              value={instaPass} 
               onChangeText={setInstaPass}
               secureTextEntry
             />
@@ -531,18 +523,19 @@ export default function App() {
             </TouchableOpacity>
           </View>
         )}
-
       </ScrollView>
 
       {/* Bottom Navigation Bar */}
       {userId && (
         <View style={styles.navBar}>
           <TouchableOpacity style={styles.navItem} onPress={() => setScreen('Home')}>
-            <Ionicons name="home" size={22} color={isHome ? activeColor : inactiveColor} />
+            <View style={[styles.navIconCircle, isHome && styles.navIconCircleActive]}>
+              <Text style={styles.navIconText}>🏠</Text>
+            </View>
             <Text style={[styles.navText, isHome && styles.navActive]}>Home</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.navItem} onPress={() => setScreen('Earn')}>
-            <Ionicons name="play-circle" size={22} color={isEarn ? activeColor : inactiveColor} />
-            <Text style={[styles.navText, isEarn && styles.navActive]}>Earn</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.navItem} onPress={() => setScreen('Daily
+            <View style={[styles.navIconCircle, isEarn && styles.navIconCircleActive]}>
+              <Text style={styles.navIconText}>📺</Text>
+            </View>
+            <Text style={[styles.navText, isEarn && styles.navActive]
