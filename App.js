@@ -16,14 +16,14 @@ const API_URL = 'https://ig-services-rdeu.onrender.com/api';
 
 export default function App() {
   const [showSplash, setShowSplash] = useState(true);
-  const [screen, setScreen] = useState('Login'); // Login, Register, Home, Earn, DailyBonus, Settings, MyOrders, Order
+  const [screen, setScreen] = useState('Login'); 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [userId, setUserId] = useState(null);
   const [coins, setCoins] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  // Forms & Lists
+  // Forms States
   const [instaUser, setInstaUser] = useState('');
   const [instaPass, setInstaPass] = useState('');
   const [targetUrl, setTargetUrl] = useState('');
@@ -34,7 +34,15 @@ export default function App() {
 
   const coinCostPerItem = { like: 2, follower: 5, comment: 3, view: 1 };
 
-  // Splash Screen Timer (Gulabi Splash Screen)
+  // Navigation Color Helpers (No long line wrap)
+  const activeColor = '#E1306C';
+  const inactiveColor = '#9CA3AF';
+  const isHome = screen === 'Home';
+  const isEarn = screen === 'Earn';
+  const isBonus = screen === 'DailyBonus';
+  const isSettings = screen === 'Settings' || screen === 'MyOrders';
+
+  // Splash Timer
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowSplash(false);
@@ -95,10 +103,10 @@ export default function App() {
     setLoading(false);
   };
 
-  // Daily Bonus (Claim 10 Coins)
+  // Daily Bonus
   const handleDailyBonus = async () => {
     if (dailyBonusClaimed) {
-      Alert.alert('Info', 'You have already claimed your daily bonus!');
+      Alert.alert('Info', 'Already claimed today!');
       return;
     }
     setLoading(true);
@@ -122,7 +130,7 @@ export default function App() {
     setLoading(false);
   };
 
-  // Watch Ad & Earn Coins
+  // Watch Ad
   const handleWatchAd = async () => {
     setLoading(true);
     try {
@@ -159,7 +167,7 @@ export default function App() {
       });
       const data = await res.json();
       if (res.ok) {
-        Alert.alert('Success', 'Instagram ID added to pool successfully!');
+        Alert.alert('Success', 'Instagram ID added successfully!');
         setInstaUser('');
         setInstaPass('');
         setScreen('Home');
@@ -176,7 +184,7 @@ export default function App() {
   const handleCreateOrder = async () => {
     const qtyNum = parseInt(quantity);
     if (!targetUrl || isNaN(qtyNum) || qtyNum <= 0) {
-      Alert.alert('Error', 'Please enter a valid URL and Quantity');
+      Alert.alert('Error', 'Please enter valid URL and Quantity');
       return;
     }
     const cost = qtyNum * coinCostPerItem[orderType];
@@ -226,7 +234,7 @@ export default function App() {
     setLoading(false);
   };
 
-  // Splash Screen
+  // Splash Screen Layout
   if (showSplash) {
     return (
       <View style={styles.splashContainer}>
@@ -381,7 +389,7 @@ export default function App() {
               </View>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.settingItem} onPress={() => Alert.alert('Stats', `Total Orders placed: ${orderList.length}`)}>
+            <TouchableOpacity style={styles.settingItem} onPress={() => Alert.alert('Stats', `Total Orders: ${orderList.length}`)}>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Ionicons name="stats-chart-sharp" size={20} color="#E1306C" style={{ marginRight: 10 }} />
                 <Text style={styles.settingItemText}>Check Total Orders Count</Text>
@@ -417,7 +425,7 @@ export default function App() {
 
             <TextInput 
               style={styles.input} 
-              placeholder="Instagram Post or Profile Link" 
+              placeholder="Instagram Link" 
               placeholderTextColor="#9CA3AF"
               value={targetUrl} 
               onChangeText={setTargetUrl}
@@ -502,20 +510,20 @@ export default function App() {
       {userId && (
         <View style={styles.navBar}>
           <TouchableOpacity style={styles.navItem} onPress={() => setScreen('Home')}>
-            <Ionicons name="home" size={22} color={screen === 'Home' ? '#E1306C' : '#9CA3AF'} />
-            <Text style={[styles.navText, screen === 'Home' && styles.navActive]}>Home</Text>
+            <Ionicons name="home" size={22} color={isHome ? activeColor : inactiveColor} />
+            <Text style={[styles.navText, isHome && styles.navActive]}>Home</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.navItem} onPress={() => setScreen('Earn')}>
-            <Ionicons name="play-circle" size={22} color={screen === 'Earn' ? '#E1306C' : '#9CA3AF'} />
-            <Text style={[styles.navText, screen === 'Earn' && styles.navActive]}>Earn</Text>
+            <Ionicons name="play-circle" size={22} color={isEarn ? activeColor : inactiveColor} />
+            <Text style={[styles.navText, isEarn && styles.navActive]}>Earn</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.navItem} onPress={() => setScreen('DailyBonus')}>
-            <Ionicons name="gift" size={22} color={screen === 'DailyBonus' ? '#E1306C' : '#9CA3AF'} />
-            <Text style={[styles.navText, screen === 'DailyBonus' && styles.navActive]}>Bonus</Text>
+            <Ionicons name="gift" size={22} color={isBonus ? activeColor : inactiveColor} />
+            <Text style={[styles.navText, isBonus && styles.navActive]}>Bonus</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.navItem} onPress={() => setScreen('Settings')}>
-            <Ionicons name="settings" size={22} color={(screen === 'Settings' || screen === 'MyOrders') ? '#E1306C' : '#9CA3AF'} />
-            <Text style={[styles.navText, (screen === 'Settings' || screen === 'MyOrders') && styles.navActive]}>Settings</Text>
+            <Ionicons name="settings" size={22} color={isSettings ? activeColor : inactiveColor} />
+            <Text style={[styles.navText, isSettings && styles.navActive]}>Settings</Text>
           </TouchableOpacity>
         </View>
       )}
@@ -525,4 +533,4 @@ export default function App() {
 
 const styles = StyleSheet.create({
   splashContainer: {
-    f
+    fl
