@@ -16,7 +16,7 @@ const API_URL = 'https://ig-services-rdeu.onrender.com/api';
 
 export default function App() {
   const [showSplash, setShowSplash] = useState(true);
-  const [screen, setScreen] = useState('Login'); 
+  const [screen, setScreen] = useState('Login'); // Login, Register, Home, Earn, DailyBonus, Settings, MyOrders, Order
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [userId, setUserId] = useState(null);
@@ -370,7 +370,7 @@ export default function App() {
               onPress={handleDailyBonus}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Ionicons name="gift-outline" size={22} color="#FFFFFF" style={{ marginRight: 8 }} />
+                <Ionicons name="gift" size={22} color="#FFFFFF" style={{ marginRight: 8 }} />
                 <Text style={styles.btnText}>{dailyBonusClaimed ? 'Claimed Today' : 'Claim 10 Coins'}</Text>
               </View>
             </TouchableOpacity>
@@ -531,6 +531,4 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
-  splashContainer: {
-    fl
+c
