@@ -10,7 +10,7 @@ import {
   ActivityIndicator 
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { Ionicons } from '@expo/vector-icons'; // Real Vector Icons Library
+import { Ionicons } from '@expo/vector-icons'; 
 
 const API_URL = 'https://ig-services-rdeu.onrender.com/api';
 
@@ -34,7 +34,7 @@ export default function App() {
 
   const coinCostPerItem = { like: 2, follower: 5, comment: 3, view: 1 };
 
-  // Splash Screen Timer (Premium Gulabi Splash Screen)
+  // Splash Screen Timer (Gulabi Splash Screen)
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowSplash(false);
@@ -112,7 +112,7 @@ export default function App() {
       if (res.ok) {
         setCoins(data.currentCoins);
         setDailyBonusClaimed(true);
-        Alert.alert('Success', '10 Daily Bonus Coins added to your account!');
+        Alert.alert('Success', '10 Daily Bonus Coins added!');
       } else {
         Alert.alert('Error', 'Failed to add bonus coins');
       }
@@ -226,7 +226,7 @@ export default function App() {
     setLoading(false);
   };
 
-  // Splash Screen (Pink Gulabi Unique Splash)
+  // Splash Screen
   if (showSplash) {
     return (
       <View style={styles.splashContainer}>
@@ -248,7 +248,7 @@ export default function App() {
         </View>
       )}
 
-      {/* Main Header (Visible when logged in) */}
+      {/* Main Header */}
       {userId && (
         <View style={styles.header}>
           <Text style={styles.headerTitle}>IG SERVICES</Text>
@@ -257,7 +257,7 @@ export default function App() {
       )}
 
       <ScrollView contentContainerStyle={styles.mainScroll}>
-        {/* 1. Login Screen (Dark & Professional with Real Instagram Logo) */}
+        {/* 1. Login Screen */}
         {screen === 'Login' && (
           <View style={styles.authContainer}>
             <Ionicons name="logo-instagram" size={70} color="#E1306C" style={{ marginBottom: 15 }} />
@@ -317,7 +317,7 @@ export default function App() {
           </View>
         )}
 
-        {/* 3. Home Screen (Services Menu) */}
+        {/* 3. Home Screen */}
         {screen === 'Home' && (
           <View style={styles.innerContainer}>
             <TouchableOpacity style={styles.serviceCard} onPress={() => setScreen('Order')}>
@@ -498,7 +498,7 @@ export default function App() {
         )}
       </ScrollView>
 
-      {/* Bottom Navigation Bar with Real Vector Icons (Only when logged in) */}
+      {/* Bottom Navigation Bar */}
       {userId && (
         <View style={styles.navBar}>
           <TouchableOpacity style={styles.navItem} onPress={() => setScreen('Home')}>
@@ -515,4 +515,14 @@ export default function App() {
           </TouchableOpacity>
           <TouchableOpacity style={styles.navItem} onPress={() => setScreen('Settings')}>
             <Ionicons name="settings" size={22} color={(screen === 'Settings' || screen === 'MyOrders') ? '#E1306C' : '#9CA3AF'} />
-            <Text style={[styles.navText, (screen ==
+            <Text style={[styles.navText, (screen === 'Settings' || screen === 'MyOrders') && styles.navActive]}>Settings</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  splashContainer: {
+    f
