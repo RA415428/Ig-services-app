@@ -10,7 +10,6 @@ import {
   ActivityIndicator 
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { Ionicons } from '@expo/vector-icons'; 
 
 const API_URL = 'https://ig-services-rdeu.onrender.com/api';
 
@@ -34,9 +33,9 @@ export default function App() {
 
   const coinCostPerItem = { like: 2, follower: 5, comment: 3, view: 1 };
 
-  // Navigation Color Helpers (No long line wrap)
+  // Navigation Helpers
   const activeColor = '#E1306C';
-  const inactiveColor = '#9CA3AF';
+  const inactiveColor = '#94A3B8';
   const isHome = screen === 'Home';
   const isEarn = screen === 'Earn';
   const isBonus = screen === 'DailyBonus';
@@ -239,7 +238,9 @@ export default function App() {
     return (
       <View style={styles.splashContainer}>
         <StatusBar style="light" />
-        <Ionicons name="logo-instagram" size={80} color="#FFFFFF" style={{ marginBottom: 20 }} />
+        <View style={styles.splashLogoCircle}>
+          <Text style={{ fontSize: 40 }}>📸</Text>
+        </View>
         <Text style={styles.splashText}>IG SERVICES</Text>
         <Text style={styles.splashSub}>Premium Instagram Booster</Text>
       </View>
@@ -268,7 +269,9 @@ export default function App() {
         {/* 1. Login Screen */}
         {screen === 'Login' && (
           <View style={styles.authContainer}>
-            <Ionicons name="logo-instagram" size={70} color="#E1306C" style={{ marginBottom: 15 }} />
+            <View style={[styles.iconCircle, { width: 80, height: 80, borderRadius: 40, marginBottom: 20 }]}>
+              <Text style={{ fontSize: 40 }}>📸</Text>
+            </View>
             <Text style={styles.authTitle}>Instagram Services</Text>
             <TextInput 
               style={styles.input} 
@@ -298,7 +301,9 @@ export default function App() {
         {/* 2. Register Screen */}
         {screen === 'Register' && (
           <View style={styles.authContainer}>
-            <Ionicons name="logo-instagram" size={70} color="#E1306C" style={{ marginBottom: 15 }} />
+            <View style={[styles.iconCircle, { width: 80, height: 80, borderRadius: 40, marginBottom: 20 }]}>
+              <Text style={{ fontSize: 40 }}>📸</Text>
+            </View>
             <Text style={styles.authTitle}>Create Account</Text>
             <TextInput 
               style={styles.input} 
@@ -330,7 +335,9 @@ export default function App() {
           <View style={styles.innerContainer}>
             <TouchableOpacity style={styles.serviceCard} onPress={() => setScreen('Order')}>
               <View style={styles.serviceCardHeader}>
-                <Ionicons name="rocket-sharp" size={24} color="#E1306C" style={{ marginRight: 10 }} />
+                <View style={styles.iconCircle}>
+                  <Text style={styles.iconText}>🚀</Text>
+                </View>
                 <Text style={styles.serviceCardTitle}>Place Boost Order</Text>
               </View>
               <Text style={styles.serviceCardSub}>Get Real Likes, Followers, Comments & Views</Text>
@@ -338,7 +345,9 @@ export default function App() {
 
             <TouchableOpacity style={styles.serviceCard} onPress={() => setScreen('AddAccount')}>
               <View style={styles.serviceCardHeader}>
-                <Ionicons name="key-sharp" size={24} color="#E1306C" style={{ marginRight: 10 }} />
+                <View style={styles.iconCircle}>
+                  <Text style={styles.iconText}>🔑</Text>
+                </View>
                 <Text style={styles.serviceCardTitle}>Link Fake Instagram ID</Text>
               </View>
               <Text style={styles.serviceCardSub}>Link accounts to automatically complete exchange orders</Text>
@@ -353,7 +362,9 @@ export default function App() {
             <Text style={styles.pageSubtitle}>Watch visual video ads to claim free coin rewards.</Text>
             <TouchableOpacity style={styles.btnPrimary} onPress={handleWatchAd}>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Ionicons name="play-circle-outline" size={22} color="#FFFFFF" style={{ marginRight: 8 }} />
+                <View style={[styles.iconCircle, { width: 30, height: 30, borderRadius: 15, marginRight: 8, borderColor: '#FFFFFF' }]}>
+                  <Text style={{ fontSize: 14 }}>📺</Text>
+                </View>
                 <Text style={styles.btnText}>Watch Video Ad</Text>
               </View>
             </TouchableOpacity>
@@ -370,7 +381,9 @@ export default function App() {
               onPress={handleDailyBonus}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Ionicons name="gift" size={22} color="#FFFFFF" style={{ marginRight: 8 }} />
+                <View style={[styles.iconCircle, { width: 30, height: 30, borderRadius: 15, marginRight: 8, borderColor: '#FFFFFF' }]}>
+                  <Text style={{ fontSize: 14 }}>🎁</Text>
+                </View>
                 <Text style={styles.btnText}>{dailyBonusClaimed ? 'Claimed Today' : 'Claim 10 Coins'}</Text>
               </View>
             </TouchableOpacity>
@@ -384,21 +397,27 @@ export default function App() {
             
             <TouchableOpacity style={styles.settingItem} onPress={fetchMyOrders}>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Ionicons name="list-circle-sharp" size={22} color="#E1306C" style={{ marginRight: 10 }} />
+                <View style={styles.iconCircle}>
+                  <Text style={styles.iconText}>📊</Text>
+                </View>
                 <Text style={styles.settingItemText}>My Orders History</Text>
               </View>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.settingItem} onPress={() => Alert.alert('Stats', `Total Orders: ${orderList.length}`)}>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Ionicons name="stats-chart-sharp" size={20} color="#E1306C" style={{ marginRight: 10 }} />
+                <View style={styles.iconCircle}>
+                  <Text style={styles.iconText}>📈</Text>
+                </View>
                 <Text style={styles.settingItemText}>Check Total Orders Count</Text>
               </View>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.btnDanger} onPress={() => {setUserId(null); setScreen('Login');}}>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Ionicons name="log-out-outline" size={20} color="#FFFFFF" style={{ marginRight: 8 }} />
+                <View style={[styles.iconCircle, { width: 30, height: 30, borderRadius: 15, marginRight: 8, borderColor: '#FFFFFF' }]}>
+                  <Text style={{ fontSize: 14 }}>🚪</Text>
+                </View>
                 <Text style={styles.btnText}>Logout Account</Text>
               </View>
             </TouchableOpacity>
@@ -510,25 +529,13 @@ export default function App() {
       {userId && (
         <View style={styles.navBar}>
           <TouchableOpacity style={styles.navItem} onPress={() => setScreen('Home')}>
-            <Ionicons name="home" size={22} color={isHome ? activeColor : inactiveColor} />
+            <View style={[styles.navIconCircle, isHome && styles.navIconCircleActive]}>
+              <Text style={styles.navIconText}>🏠</Text>
+            </View>
             <Text style={[styles.navText, isHome && styles.navActive]}>Home</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.navItem} onPress={() => setScreen('Earn')}>
-            <Ionicons name="play-circle" size={22} color={isEarn ? activeColor : inactiveColor} />
-            <Text style={[styles.navText, isEarn && styles.navActive]}>Earn</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.navItem} onPress={() => setScreen('DailyBonus')}>
-            <Ionicons name="gift" size={22} color={isBonus ? activeColor : inactiveColor} />
-            <Text style={[styles.navText, isBonus && styles.navActive]}>Bonus</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.navItem} onPress={() => setScreen('Settings')}>
-            <Ionicons name="settings" size={22} color={isSettings ? activeColor : inactiveColor} />
-            <Text style={[styles.navText, isSettings && styles.navActive]}>Settings</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-    </View>
-  );
-}
-
-c
+            <View style={[styles.navIconCircle, isEarn && styles.navIconCircleActive]}>
+              <Text style={styles.navIconText}>📺</Text>
+            </View>
+            <Text style={[styles.navText, isEarn && styles.navActive]
