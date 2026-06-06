@@ -1,12 +1,17 @@
 {
   "expo": {
     "name": "IG Services",
-    "slug": "ig-services-app",
+    "slug": "ig-services-",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
     "android": {
       "package": "com.nayakhardayal4.igservices"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "87b2e408-395c-4aec-9ba9-8095472ea3ff"
+      }
     }
   }
 }
