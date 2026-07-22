@@ -2,7 +2,6 @@
   "expo": {
     "name": "IG Services",
     "slug": "ig-services-app",
-    "owner": "nayakha",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
